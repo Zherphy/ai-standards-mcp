@@ -1,0 +1,26 @@
+{
+  "name": "@zherphy/ai-standards-mcp",
+  "version": "1.0.0",
+  "description": "MCP server to initialize AI development standards into any project",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "ai-standards-mcp": "dist/index.js"
+  },
+  "files": ["dist", "templates"],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": { "node": ">=18" }
+}
