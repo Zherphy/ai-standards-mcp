@@ -13,9 +13,19 @@ const REQUIRED_FILES = [
   '.ai/skills/task-prompt-generator/skill.md',
   '.ai/skills/code-review-validation/skill.md',
   '.ai/skills/workflow-enforcer/skill.md',
+  '.ai/skills/project-init/skill.md',
+  '.ai/skills/code-style-constraints/skill.md',
+  '.ai/skills/index.json',
+  '.ai/agents/roles/code-implementer.md',
+  '.ai/agents/roles/code-reviewer.md',
+  '.ai/agents/roles/debugger.md',
+  '.ai/agents/roles/test-writer.md',
+  '.ai/prompts/WORKFLOW_ENFORCEMENT_GUIDE.md',
+  '.ai/workflow/checklists/tdd-process.md',
   '.githooks/pre-commit',
   '.githooks/pre-push',
   '.githooks/commit-msg',
+  '.githooks/post-merge',
 ];
 
 export function validateSetup(dir: string): ValidationResult {

@@ -1,0 +1,198 @@
+{
+  "version": "3.0.0",
+  "schemaVersion": "3.0.0",
+  "name": "[PROJECT_NAME] AI Skills Index",
+  "description": "[PROJECT_NAME] 项目的 AI 技能索引文件，用于 Agent 自动发现和加载技能，支持 v3.0.0 标准格式",
+  "created": "[CREATED_DATE]",
+  "updated": "[LAST_UPDATED]",
+  "formatVersion": "standard",
+  "skills": [
+    {
+      "id": "project-init",
+      "name": "project-init",
+      "description": "项目初始化配置加载器，自动加载所有项目配置文件",
+      "version": "1.0.0",
+      "path": "./project-init",
+      "categories": ["initialization", "governance"],
+      "modes": ["code", "architect", "ask"],
+      "priority": 100,
+      "enabled": true,
+      "dependencies": {
+        "skills": []
+      },
+      "tools": {}
+    },
+    {
+      "id": "task-prompt-generator",
+      "name": "task-prompt-generator",
+      "description": "帮助用户生成标准化的任务提示词，定义任务工作流和步骤，确保提供给 Agent 的提示词一致且符合项目标准",
+      "version": "1.0.0",
+      "path": "./task-prompt-generator",
+      "categories": ["documentation", "development"],
+      "modes": ["orchestrator", "code", "architect"],
+      "priority": 5,
+      "enabled": true,
+      "dependencies": {
+        "skills": ["agent-interaction-guide"]
+      },
+      "tools": {}
+    },
+    {
+      "id": "workflow-enforcer",
+      "name": "workflow-enforcer",
+      "description": "强制执行项目的开发工作流程规范，确保所有使用 Agent 进行开发的人员遵循标准化流程",
+      "version": "1.0.0",
+      "path": "./workflow-enforcer",
+      "categories": ["governance", "quality-assurance"],
+      "modes": ["orchestrator", "code"],
+      "priority": 10,
+      "enabled": true,
+      "dependencies": {
+        "skills": ["task-prompt-generator", "[TEST_SKILL_NAME]", "[CODE_STYLE_SKILL_NAME]"]
+      },
+      "tools": {}
+    },
+    {
+      "id": "[CODE_STYLE_SKILL_NAME]",
+      "name": "[CODE_STYLE_SKILL_NAME]",
+      "description": "[PROJECT_NAME] 项目的代码风格和安全约束规范，定义编码标准、安全最佳实践和开发约束",
+      "version": "1.0.0",
+      "path": "./[CODE_STYLE_SKILL_NAME]",
+      "categories": ["governance", "quality-assurance"],
+      "modes": ["code", "orchestrator"],
+      "priority": 15,
+      "enabled": true,
+      "dependencies": {
+        "skills": ["workflow-enforcer"]
+      },
+      "tools": {}
+    },
+    {
+      "id": "[TEST_SKILL_NAME]",
+      "name": "[TEST_SKILL_NAME]",
+      "description": "为 [TECH_STACK] 服务生成高质量的单元测试，遵循 TDD 原则，确保测试覆盖率满足项目要求",
+      "version": "1.0.0",
+      "path": "./[TEST_SKILL_NAME]",
+      "categories": ["testing"],
+      "modes": ["code", "debug"],
+      "priority": 40,
+      "enabled": true,
+      "dependencies": {
+        "frameworks": ["[TEST_FRAMEWORK_1]", "[TEST_FRAMEWORK_2]"],
+        "tools": ["[BUILD_TOOL]"]
+      },
+      "tools": {}
+    }
+  ],
+  "categories": {
+    "initialization": {
+      "name": "初始化",
+      "description": "项目初始化、配置加载和环境设置",
+      "skillCount": 1,
+      "skills": ["project-init"],
+      "enabled": true
+    },
+    "development": {
+      "name": "开发",
+      "description": "功能开发、代码实现和集成",
+      "skillCount": 1,
+      "skills": ["task-prompt-generator"],
+      "enabled": true
+    },
+    "testing": {
+      "name": "测试",
+      "description": "单元测试、集成测试和测试用例生成",
+      "skillCount": 1,
+      "skills": ["[TEST_SKILL_NAME]"],
+      "enabled": true
+    },
+    "documentation": {
+      "name": "文档",
+      "description": "技术文档、API 文档和开发规范",
+      "skillCount": 1,
+      "skills": ["task-prompt-generator"],
+      "enabled": true
+    },
+    "governance": {
+      "name": "治理",
+      "description": "工作流程强制、质量保证和合规性检查",
+      "skillCount": 3,
+      "skills": ["project-init", "workflow-enforcer", "[CODE_STYLE_SKILL_NAME]"],
+      "enabled": true
+    },
+    "quality-assurance": {
+      "name": "质量保证",
+      "description": "代码质量、测试覆盖和流程合规检查",
+      "skillCount": 2,
+      "skills": ["workflow-enforcer", "[CODE_STYLE_SKILL_NAME]"],
+      "enabled": true
+    }
+  },
+  "modes": {
+    "architect": {
+      "name": "Architect 模式",
+      "description": "架构设计、文档生成和系统分析",
+      "skillCount": 2,
+      "skills": ["project-init", "task-prompt-generator"],
+      "enabled": true
+    },
+    "code": {
+      "name": "Code 模式",
+      "description": "代码开发、功能实现和测试编写",
+      "skillCount": 4,
+      "skills": ["project-init", "task-prompt-generator", "[CODE_STYLE_SKILL_NAME]", "[TEST_SKILL_NAME]"],
+      "enabled": true
+    },
+    "ask": {
+      "name": "Ask 模式",
+      "description": "问题解答、文档查询和技术咨询",
+      "skillCount": 1,
+      "skills": ["project-init"],
+      "enabled": true
+    },
+    "debug": {
+      "name": "Debug 模式",
+      "description": "问题调试、错误分析和性能优化",
+      "skillCount": 1,
+      "skills": ["[TEST_SKILL_NAME]"],
+      "enabled": true
+    },
+    "orchestrator": {
+      "name": "Orchestrator 模式",
+      "description": "任务协调、工作流管理和多模式协作",
+      "skillCount": 2,
+      "skills": ["task-prompt-generator", "workflow-enforcer"],
+      "enabled": true
+    }
+  },
+  "discovery": {
+    "autoScan": true,
+    "scanPaths": [".ai/skills"],
+    "scanInterval": 300,
+    "filePatterns": ["skill.md"],
+    "excludePatterns": ["index.json", "schema.json", "standard"],
+    "validation": {
+      "enabled": true,
+      "schema": ".ai/skills/schema/standard-format-spec.md",
+      "strict": false
+    },
+    "formatDetection": {
+      "enabled": true,
+      "skillPattern": "*/skill.md",
+      "packageJsonPattern": "*/package.json",
+      "preferredFormat": "vercel-skills"
+    }
+  },
+  "metadata": {
+    "schema": ".ai/skills/schema/standard-format-spec.md",
+    "validationEnabled": true,
+    "requiredFields": ["id", "name", "description", "version", "categories"],
+    "recommendedFields": ["namespace", "keywords", "tags", "dependencies", "modes", "priority"]
+  },
+  "statistics": {
+    "totalSkills": 5,
+    "enabledSkills": 5,
+    "disabledSkills": 0,
+    "lastUpdated": "[LAST_UPDATED]"
+  }
+}

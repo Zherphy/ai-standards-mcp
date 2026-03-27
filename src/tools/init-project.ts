@@ -99,6 +99,15 @@ export async function initProject(options: InitProjectOptions): Promise<InitProj
     copyTemplateFile(srcFile, destFile, variables, created, skipped, relPath);
   }
 
+  // Copy ai-extras (agent roles, prompts, workflow templates, etc.) to .ai/
+  const aiExtrasDir = path.join(TEMPLATES_DIR, 'ai-extras');
+  for (const srcFile of walkDir(aiExtrasDir)) {
+    const relToExtras = path.relative(aiExtrasDir, srcFile);
+    const destFile = path.join(projectDir, '.ai', relToExtras);
+    const relPath = path.join('.ai', relToExtras).replace(/\\/g, '/');
+    copyTemplateFile(srcFile, destFile, variables, created, skipped, relPath);
+  }
+
   return { created, skipped };
 }
 
