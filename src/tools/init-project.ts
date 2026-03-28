@@ -108,6 +108,15 @@ export async function initProject(options: InitProjectOptions): Promise<InitProj
     copyTemplateFile(srcFile, destFile, variables, created, skipped, relPath);
   }
 
+  // Copy claude-hooks (SessionStart + PreToolUse hardcoded constraints) to .claude/
+  const claudeHooksDir = path.join(TEMPLATES_DIR, 'claude-hooks');
+  for (const srcFile of walkDir(claudeHooksDir)) {
+    const relToHooks = path.relative(claudeHooksDir, srcFile);
+    const destFile = path.join(projectDir, '.claude', relToHooks);
+    const relPath = path.join('.claude', relToHooks).replace(/\\/g, '/');
+    copyTemplateFile(srcFile, destFile, variables, created, skipped, relPath);
+  }
+
   return { created, skipped };
 }
 

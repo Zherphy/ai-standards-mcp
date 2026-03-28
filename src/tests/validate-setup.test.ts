@@ -53,6 +53,9 @@ describe('validateSetup', () => {
       '.githooks/pre-push',
       '.githooks/commit-msg',
       '.githooks/post-merge',
+      '.claude/settings.json',
+      '.claude/hooks/session-workflow-reminder.sh',
+      '.claude/hooks/pre-bash-guard.sh',
     ];
     for (const file of requiredFiles) {
       const fullPath = path.join(tmpDir, file);

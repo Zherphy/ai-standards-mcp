@@ -26,6 +26,9 @@ const REQUIRED_FILES = [
   '.githooks/pre-push',
   '.githooks/commit-msg',
   '.githooks/post-merge',
+  '.claude/settings.json',
+  '.claude/hooks/session-workflow-reminder.sh',
+  '.claude/hooks/pre-bash-guard.sh',
 ];
 
 export function validateSetup(dir: string): ValidationResult {
