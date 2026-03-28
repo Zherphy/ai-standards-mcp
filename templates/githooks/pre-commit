@@ -64,25 +64,21 @@ CHANGELOG=".ai/changelog/ai-modifications.md"
 
 if [ -f "$CHANGELOG" ]; then
     if ! grep -q "$(date +%Y-%m-%d)" "$CHANGELOG"; then
-        echo -e "${RED}❌${NC}  修改记录中未找到今天的日期（$(date +%Y-%m-%d)）"
+        echo -e "${RED}❌${NC} 修改记录中未找到今天的日期（$(date +%Y-%m-%d)）"
         echo "    请更新 $CHANGELOG"
-        ERRORS=$((ERRORS + 1))
+        ERRORS=$((ERRORS+1))
     fi
 else
-    echo -e "${RED}❌${NC}  未找到修改记录文件 $CHANGELOG"
-    ERRORS=$((ERRORS + 1))
+    echo -e "${RED}❌${NC} 未找到修改记录文件 $CHANGELOG"
+    ERRORS=$((ERRORS+1))
 fi
 
 # 检查提示词归档
 PROMPT_FILES=$(ls .ai/prompts/prompt-*-${TODAY}.md 2>/dev/null | wc -l)
 if [ "$PROMPT_FILES" -eq 0 ]; then
-    # 检查是否有代码文件变更（若只有文档变更则不强制）
-    CODE_CHANGES=$(git diff --cached --name-only | grep -vE '\.(md|txt|json|yml|yaml)$' | wc -l)
-    if [ "$CODE_CHANGES" -gt 0 ]; then
-        echo -e "${RED}❌${NC}  代码变更未找到今天的提示词文件（.ai/prompts/prompt-*-${TODAY}.md）"
-        echo "    请在 .ai/prompts/ 下创建 prompt-{type}-${TODAY}.md"
-        ERRORS=$((ERRORS + 1))
-    fi
+    echo -e "${RED}❌${NC} 未找到今天的提示词归档文件（.ai/prompts/prompt-*-${TODAY}.md）"
+    echo "    请创建提示词文件记录本次任务"
+    ERRORS=$((ERRORS+1))
 fi
 
 if [ $ERRORS -gt 0 ]; then
